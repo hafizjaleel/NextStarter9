@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { CourseCard } from './components/course-card';
 import { SearchInput } from '@/components/search-input';
 import { FilterPanel } from '@/components/filter-panel';
+import { Pagination, PaginationPrevious, PaginationNext } from '@/components/pagination';
 
 const courses = [
   {
