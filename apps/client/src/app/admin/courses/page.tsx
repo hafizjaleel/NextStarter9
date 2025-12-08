@@ -1,7 +1,9 @@
 'use client';
 
-import { Search, Filter } from 'lucide-react';
+import { useState } from 'react';
 import { CourseCard } from './components/course-card';
+import { SearchInput } from '@/components/search-input';
+import { FilterPanel } from '@/components/filter-panel';
 
 const courses = [
   {
