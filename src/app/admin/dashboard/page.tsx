@@ -3,11 +3,6 @@ import { SalesChart } from './components/sales-chart';
 import { WebinarAnalytics } from './components/webinar-analytics';
 import { RecentEnrollments } from './components/recent-enrollments';
 
-export const metadata = {
-  title: 'Dashboard | LMS Admin',
-  description: 'LMS Dashboard with analytics and recent enrollments',
-};
-
 export default function Dashboard() {
   return (
     <div className="space-y-8">
