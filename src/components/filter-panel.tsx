@@ -89,6 +89,19 @@ export function FilterPanel({
           </option>
         ))}
       </select>
+
+      {/* Free/Paid Filter */}
+      <select
+        value={isFree}
+        onChange={(e) => onIsFreeChange?.(e.target.value)}
+        className="rounded-lg border border-slate-100 bg-white px-4 py-2.5 text-sm text-slate-900 transition focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer hover:bg-slate-50"
+      >
+        {priceTypes.map((price) => (
+          <option key={price.value} value={price.value}>
+            {price.label}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }
