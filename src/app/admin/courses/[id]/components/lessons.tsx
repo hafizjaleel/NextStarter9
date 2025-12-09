@@ -329,10 +329,50 @@ export function CourseLessons() {
         </div>
       )}
 
+      {selectedLessonIds.length > 0 && (
+        <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 flex items-center justify-between">
+          <p className="text-sm font-medium text-emerald-900">
+            {selectedLessonIds.length} lesson{selectedLessonIds.length !== 1 ? 's' : ''} selected
+          </p>
+          <div className="flex gap-2">
+            <button
+              onClick={() => handleBulkStatusChange(true)}
+              className="rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-emerald-700"
+            >
+              Publish All
+            </button>
+            <button
+              onClick={() => handleBulkStatusChange(false)}
+              className="rounded-lg border border-emerald-600 bg-white px-3 py-1.5 text-xs font-medium text-emerald-600 transition hover:bg-emerald-50"
+            >
+              Unpublish All
+            </button>
+            <button
+              onClick={() => setSelectedLessonIds([])}
+              className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:bg-slate-50"
+            >
+              Clear
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="space-y-6">
-        {Object.entries(groupedLessons).map(([moduleName, moduleLessons]) => (
-          <div key={moduleName}>
-            <h3 className="mb-3 text-base font-bold text-slate-900">{moduleName}</h3>
+        {Object.entries(groupedLessons).map(([moduleName, moduleLessons]) => {
+          const moduleIds = moduleLessons.map((l) => l.id);
+          const allModuleSelected = moduleIds.length > 0 && moduleIds.every((id) => selectedLessonIds.includes(id));
+
+          return (
+            <div key={moduleName}>
+              <div className="mb-3 flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={allModuleSelected}
+                  onChange={() => handleSelectAllInModule(moduleName)}
+                  className="h-4 w-4 rounded border-slate-300 text-emerald-600 transition cursor-pointer"
+                />
+                <h3 className="text-base font-bold text-slate-900">{moduleName}</h3>
+              </div>
             {moduleLessons.length > 0 ? (
               <div className="space-y-3">
                 {moduleLessons.map((lesson) => (
@@ -341,6 +381,12 @@ export function CourseLessons() {
                     className="rounded-xl border border-slate-100 bg-white p-4 shadow-sm hover:shadow-md transition"
                   >
                     <div className="flex items-center justify-between">
+                      <input
+                        type="checkbox"
+                        checked={selectedLessonIds.includes(lesson.id)}
+                        onChange={() => handleSelectLesson(lesson.id)}
+                        className="h-4 w-4 rounded border-slate-300 text-emerald-600 transition cursor-pointer"
+                      />
                       <div className="flex items-center gap-3 flex-1">
                         {lesson.type === 'video' ? (
                           <Video className="h-5 w-5 text-blue-600 flex-shrink-0" strokeWidth={2} />
@@ -362,15 +408,16 @@ export function CourseLessons() {
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span
-                          className={`inline-flex rounded-full px-2 py-1 text-xs font-medium ${
+                        <button
+                          onClick={() => handleToggleStatus(lesson.id)}
+                          className={`inline-flex rounded-full px-2 py-1 text-xs font-medium transition cursor-pointer ${
                             lesson.published
-                              ? 'bg-emerald-100 text-emerald-700'
-                              : 'bg-slate-100 text-slate-600'
+                              ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+                              : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                           }`}
                         >
                           {lesson.published ? 'Published' : 'Draft'}
-                        </span>
+                        </button>
                         <button className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600">
                           <Edit2 className="h-4 w-4" strokeWidth={2} />
                         </button>
@@ -389,7 +436,8 @@ export function CourseLessons() {
               <p className="text-sm text-slate-500">No lessons in this module yet</p>
             )}
           </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
