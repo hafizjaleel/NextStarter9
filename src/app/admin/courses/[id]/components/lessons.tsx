@@ -198,7 +198,7 @@ export function CourseLessons({ courseId }: CourseLessonsProps) {
 
         if (editingId !== null) {
           // Update existing lesson
-          const response = await fetch(`/api/v1/course/lesson/update/${editingId}`, {
+          const response = await fetch(`/api/v1/course/module/lesson/update/${editingId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload),
@@ -299,7 +299,7 @@ export function CourseLessons({ courseId }: CourseLessonsProps) {
   const handleConfirmDelete = async () => {
     if (deleteConfirm.id !== null) {
       try {
-        const response = await fetch(`/api/v1/course/lesson/delete/${deleteConfirm.id}`, {
+        const response = await fetch(`/api/v1/course/module/lesson/delete/${deleteConfirm.id}`, {
           method: 'DELETE',
         });
 
@@ -320,7 +320,7 @@ export function CourseLessons({ courseId }: CourseLessonsProps) {
     if (!lesson) return;
 
     try {
-      const response = await fetch(`/api/v1/course/lesson/update/${id}`, {
+      const response = await fetch(`/api/v1/course/module/lesson/update/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ published: !lesson.published }),
@@ -368,7 +368,7 @@ export function CourseLessons({ courseId }: CourseLessonsProps) {
     try {
       await Promise.all(
         selectedLessonIds.map((id) =>
-          fetch(`/api/v1/course/lesson/update/${id}`, {
+          fetch(`/api/v1/course/module/lesson/update/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ published: status }),
@@ -487,7 +487,7 @@ export function CourseLessons({ courseId }: CourseLessonsProps) {
     // Send reorder updates to API
     try {
       for (const lesson of updatedModuleLessons) {
-        await fetch(`/api/v1/course/lesson/update/${lesson.id}`, {
+        await fetch(`/api/v1/course/module/lesson/update/${lesson.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ lessonOrder: lesson.lessonOrder }),
