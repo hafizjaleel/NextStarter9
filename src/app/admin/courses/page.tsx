@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { CourseCard } from './components/course-card';
 import { SearchInput } from '@/components/search-input';
 import { FilterPanel } from '@/components/filter-panel';
@@ -74,9 +75,12 @@ export default function CoursesPage() {
           <h1 className="text-2xl font-bold text-slate-900">Courses</h1>
           <p className="mt-1 text-sm text-slate-600">Manage all courses and content</p>
         </div>
-        <button className="rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-emerald-700">
+        <Link
+          href="/admin/courses/create"
+          className="inline-flex rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-emerald-700"
+        >
           + Create Course
-        </button>
+        </Link>
       </div>
 
       {/* Search and Filter Bar */}

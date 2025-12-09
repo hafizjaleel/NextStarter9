@@ -7,11 +7,13 @@ import { CourseLessons } from './components/lessons';
 import { CourseAnalytics } from './components/analytics';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { use } from 'react';
 
-export default function CourseDetailPage({ params }: { params: { id: string } }) {
-  // In a real app, fetch course data based on params.id
+export default function CourseDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
+  // In a real app, fetch course data based on id
   const course = {
-    id: params.id,
+    id,
     title: 'Advanced React Development',
     instructor: 'John Smith',
   };
