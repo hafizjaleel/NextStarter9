@@ -63,6 +63,7 @@ export function CourseModules() {
   const [modules, setModules] = useState(initialModules);
   const [lessons] = useState(initialLessons);
   const [showForm, setShowForm] = useState(false);
+  const [editingId, setEditingId] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     title: '',
   });
