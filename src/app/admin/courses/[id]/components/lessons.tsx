@@ -571,7 +571,7 @@ export function CourseLessons() {
                   type="checkbox"
                   checked={allModuleSelected}
                   onChange={() => handleSelectAllInModule(moduleName)}
-                  className="h-4 w-4 rounded border-slate-300 text-emerald-600 transition cursor-pointer"
+                  className="h-4 w-4 rounded border-slate-300 bg-slate-50 text-emerald-600 transition cursor-pointer"
                 />
                 <h3 className="text-base font-bold text-slate-900">{moduleName}</h3>
               </div>
