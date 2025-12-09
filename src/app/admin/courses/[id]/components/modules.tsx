@@ -7,30 +7,64 @@ const initialModules = [
   {
     id: 1,
     title: 'Getting Started with React',
-    lessons: 3,
-    duration: '2h 15m',
   },
   {
     id: 2,
     title: 'React Hooks Deep Dive',
-    lessons: 5,
-    duration: '4h 30m',
   },
   {
     id: 3,
     title: 'State Management',
-    lessons: 4,
-    duration: '3h 45m',
   },
 ];
 
+const initialLessons = [
+  { id: 1, title: 'Introduction to React', duration: '15m', module: 'Getting Started with React' },
+  { id: 2, title: 'Setting Up Your Environment', duration: '20m', module: 'Getting Started with React' },
+  { id: 3, title: 'React Basics Quiz', duration: '10m', module: 'Getting Started with React' },
+  { id: 4, title: 'useState Hook Tutorial', duration: '25m', module: 'React Hooks Deep Dive' },
+  { id: 5, title: 'useEffect Deep Dive', duration: '30m', module: 'React Hooks Deep Dive' },
+  { id: 6, title: 'useContext Hook', duration: '20m', module: 'React Hooks Deep Dive' },
+  { id: 7, title: 'useReducer Advanced', duration: '25m', module: 'React Hooks Deep Dive' },
+  { id: 8, title: 'Custom Hooks', duration: '28m', module: 'React Hooks Deep Dive' },
+];
+
+const parseDuration = (duration: string): number => {
+  const timeRegex = /(\d+)([hm])/g;
+  let minutes = 0;
+  let match;
+
+  while ((match = timeRegex.exec(duration)) !== null) {
+    const value = parseInt(match[1]);
+    const unit = match[2];
+    if (unit === 'h') {
+      minutes += value * 60;
+    } else if (unit === 'm') {
+      minutes += value;
+    }
+  }
+
+  return minutes;
+};
+
+const formatDuration = (totalMinutes: number): string => {
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  if (hours > 0 && minutes > 0) {
+    return `${hours}h ${minutes}m`;
+  } else if (hours > 0) {
+    return `${hours}h`;
+  } else {
+    return `${minutes}m`;
+  }
+};
+
 export function CourseModules() {
   const [modules, setModules] = useState(initialModules);
+  const [lessons] = useState(initialLessons);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
-    lessons: '',
-    duration: '',
   });
 
   const handleInputChange = (
@@ -42,17 +76,26 @@ export function CourseModules() {
 
   const handleAddModule = (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.title && formData.lessons && formData.duration) {
+    if (formData.title) {
       const newModule = {
         id: Math.max(...modules.map((m) => m.id), 0) + 1,
         title: formData.title,
-        lessons: parseInt(formData.lessons),
-        duration: formData.duration,
       };
       setModules([...modules, newModule]);
-      setFormData({ title: '', lessons: '', duration: '' });
+      setFormData({ title: '' });
       setShowForm(false);
     }
+  };
+
+  const getModuleStats = (moduleName: string) => {
+    const moduleLessons = lessons.filter((l) => l.module === moduleName);
+    const lessonCount = moduleLessons.length;
+    const totalMinutes = moduleLessons.reduce((sum, lesson) => {
+      return sum + parseDuration(lesson.duration);
+    }, 0);
+    const duration = formatDuration(totalMinutes);
+
+    return { lessonCount, duration };
   };
 
   const handleDeleteModule = (id: number) => {
