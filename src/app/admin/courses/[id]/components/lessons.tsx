@@ -413,6 +413,15 @@ export function CourseLessons() {
               </div>
             )}
 
+            {formData.type === 'quiz' && (
+              <QuizForm
+                quizData={formData.quizData}
+                onQuizDataChange={(quizData) =>
+                  setFormData((prev) => ({ ...prev, quizData }))
+                }
+              />
+            )}
+
             <div className="flex gap-3 pt-2">
               <button
                 type="submit"
