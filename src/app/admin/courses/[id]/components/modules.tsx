@@ -140,6 +140,42 @@ export function CourseModules() {
     setFormData({ title: '' });
   };
 
+  const handleDragStart = (id: number) => {
+    setDraggedId(id);
+  };
+
+  const handleDragOver = (id: number) => {
+    setDragOverId(id);
+  };
+
+  const handleDragLeave = () => {
+    setDragOverId(null);
+  };
+
+  const handleDrop = (targetId: number) => {
+    if (draggedId === null || draggedId === targetId) {
+      setDraggedId(null);
+      setDragOverId(null);
+      return;
+    }
+
+    const draggedIndex = modules.findIndex((m) => m.id === draggedId);
+    const targetIndex = modules.findIndex((m) => m.id === targetId);
+
+    const newModules = [...modules];
+    const [draggedModule] = newModules.splice(draggedIndex, 1);
+    newModules.splice(targetIndex, 0, draggedModule);
+
+    setModules(newModules);
+    setDraggedId(null);
+    setDragOverId(null);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedId(null);
+    setDragOverId(null);
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex justify-end">
