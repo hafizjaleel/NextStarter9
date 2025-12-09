@@ -278,19 +278,25 @@ export function CourseLessons() {
     });
   };
 
-  const handleDragStart = (id: number) => {
+  const handleDragStart = (id: number, e: React.DragEvent) => {
+    e.dataTransfer.effectAllowed = 'move';
     setDraggedId(id);
   };
 
-  const handleDragOver = (id: number) => {
+  const handleDragOver = (id: number, e: React.DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
     setDragOverId(id);
   };
 
-  const handleDragLeave = () => {
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
     setDragOverId(null);
   };
 
-  const handleDrop = (targetId: number) => {
+  const handleDrop = (targetId: number, e: React.DragEvent) => {
+    e.preventDefault();
+
     if (draggedId === null || draggedId === targetId) {
       setDraggedId(null);
       setDragOverId(null);
