@@ -143,7 +143,7 @@ export function CourseModules() {
   const handleClosePanel = () => {
     setIsPanelOpen(false);
     setEditingId(null);
-    setFormData({ title: '' });
+    setFormData({ title: '', moduleOrder: '' });
   };
 
   const handleDragStart = (id: number, e: React.DragEvent) => {
