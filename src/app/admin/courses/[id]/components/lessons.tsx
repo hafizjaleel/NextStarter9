@@ -585,10 +585,10 @@ export function CourseLessons() {
                   <div
                     key={lesson.id}
                     draggable
-                    onDragStart={() => handleDragStart(lesson.id)}
-                    onDragOver={() => handleDragOver(lesson.id)}
-                    onDragLeave={handleDragLeave}
-                    onDrop={() => handleDrop(lesson.id)}
+                    onDragStart={(e) => handleDragStart(lesson.id, e)}
+                    onDragOver={(e) => handleDragOver(lesson.id, e)}
+                    onDragLeave={(e) => handleDragLeave(e)}
+                    onDrop={(e) => handleDrop(lesson.id, e)}
                     onDragEnd={handleDragEnd}
                     className={`rounded-xl border bg-white p-4 shadow-sm transition ${
                       isDragging
