@@ -81,7 +81,7 @@ export function CourseModules() {
     if (moduleToEdit) {
       setFormData({ title: moduleToEdit.title });
       setEditingId(id);
-      setShowForm(true);
+      setIsPanelOpen(true);
     }
   };
 
