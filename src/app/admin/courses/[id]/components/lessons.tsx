@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Video, FileText, Plus, Edit2, Trash2, Lock, HelpCircle } from 'lucide-react';
 import { SidePanel } from '@/components/side-panel';
+import { ConfirmDialog } from '@/components/confirm-dialog';
 import { QuizForm, type QuizData, type Question } from './quiz-form';
 
 const initialLessons: Array<{
