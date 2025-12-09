@@ -52,6 +52,9 @@ export function CourseLessons() {
     type: 'video',
     duration: '',
     module: modules[0],
+    muxVideo: '',
+    pdfFile: null as File | null,
+    downloadableFile: null as File | null,
   });
 
   const handleInputChange = (
@@ -61,19 +64,40 @@ export function CourseLessons() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, files } = e.target;
+    if (files && files[0]) {
+      setFormData((prev) => ({ ...prev, [name]: files[0] }));
+    }
+  };
+
   const handleAddLesson = (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.title && formData.duration && formData.module) {
+
+    const hasValidContent =
+      (formData.type === 'video' && formData.muxVideo) ||
+      (formData.type === 'pdf' && formData.pdfFile) ||
+      (formData.type === 'downloadable' && formData.downloadableFile);
+
+    if (formData.title && formData.duration && formData.module && hasValidContent) {
       const newLesson = {
         id: Math.max(...lessons.map((l) => l.id), 0) + 1,
         title: formData.title,
-        type: formData.type as 'video' | 'document',
+        type: formData.type as 'video' | 'pdf' | 'downloadable',
         duration: formData.duration,
         module: formData.module,
         published: false,
       };
       setLessons([...lessons, newLesson]);
-      setFormData({ title: '', type: 'video', duration: '', module: modules[0] });
+      setFormData({
+        title: '',
+        type: 'video',
+        duration: '',
+        module: modules[0],
+        muxVideo: '',
+        pdfFile: null,
+        downloadableFile: null,
+      });
       setShowForm(false);
     }
   };
