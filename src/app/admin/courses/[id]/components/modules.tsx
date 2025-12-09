@@ -194,7 +194,7 @@ export function CourseModules() {
         <button
           onClick={() => {
             setEditingId(null);
-            setFormData({ title: '' });
+            setFormData({ title: '', moduleOrder: '' });
             setIsPanelOpen(true);
           }}
           className="flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-emerald-700"
