@@ -208,7 +208,8 @@ export function CourseModules() {
         <button
           onClick={() => {
             setEditingId(null);
-            setFormData({ title: '', moduleOrder: '' });
+            const nextOrder = modules.length > 0 ? Math.max(...modules.map((m) => m.moduleOrder)) + 1 : 1;
+            setFormData({ title: '', moduleOrder: nextOrder.toString() });
             setIsPanelOpen(true);
           }}
           className="flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-emerald-700"
