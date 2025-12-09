@@ -365,21 +365,12 @@ export function CourseLessons() {
           return (
             <div key={moduleName}>
               <div className="mb-3 flex items-center gap-3">
-                <button
-                  onClick={() => handleSelectAllInModule(moduleName)}
-                  className={`relative inline-flex h-6 w-11 rounded-full transition-colors ${
-                    allModuleSelected
-                      ? 'bg-emerald-600'
-                      : 'bg-slate-200'
-                  }`}
-                  aria-label={`Toggle selection for all lessons in ${moduleName}`}
-                >
-                  <span
-                    className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${
-                      allModuleSelected ? 'translate-x-5' : 'translate-x-0.5'
-                    }`}
-                  />
-                </button>
+                <input
+                  type="checkbox"
+                  checked={allModuleSelected}
+                  onChange={() => handleSelectAllInModule(moduleName)}
+                  className="h-4 w-4 rounded border-slate-300 text-emerald-600 transition cursor-pointer"
+                />
                 <h3 className="text-base font-bold text-slate-900">{moduleName}</h3>
               </div>
             {moduleLessons.length > 0 ? (
@@ -390,21 +381,6 @@ export function CourseLessons() {
                     className="rounded-xl border border-slate-100 bg-white p-4 shadow-sm hover:shadow-md transition"
                   >
                     <div className="flex items-center justify-between">
-                      <button
-                        onClick={() => handleSelectLesson(lesson.id)}
-                        className={`relative inline-flex h-6 w-11 rounded-full transition-colors ${
-                          selectedLessonIds.includes(lesson.id)
-                            ? 'bg-emerald-600'
-                            : 'bg-slate-200'
-                        }`}
-                        aria-label={`Toggle selection for ${lesson.title}`}
-                      >
-                        <span
-                          className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${
-                            selectedLessonIds.includes(lesson.id) ? 'translate-x-5' : 'translate-x-0.5'
-                          }`}
-                        />
-                      </button>
                       <div className="flex items-center gap-3 flex-1">
                         {lesson.type === 'video' ? (
                           <Video className="h-5 w-5 text-blue-600 flex-shrink-0" strokeWidth={2} />
@@ -425,10 +401,28 @@ export function CourseLessons() {
                           </div>
                         </div>
                       </div>
+                      <div className="flex flex-col items-center gap-1">
+                        <button
+                          onClick={() => handleSelectLesson(lesson.id)}
+                          className={`relative inline-flex h-6 w-11 rounded-full transition-colors ${
+                            selectedLessonIds.includes(lesson.id)
+                              ? 'bg-emerald-600'
+                              : 'bg-slate-200'
+                          }`}
+                          aria-label={`Toggle selection for ${lesson.title}`}
+                        >
+                          <span
+                            className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${
+                              selectedLessonIds.includes(lesson.id) ? 'translate-x-5' : 'translate-x-0.5'
+                            }`}
+                          />
+                        </button>
+                        <span className="text-xs text-slate-500">Select</span>
+                      </div>
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => handleToggleStatus(lesson.id)}
-                          className={`inline-flex rounded-full px-2 py-1 text-xs font-medium transition cursor-pointer ${
+                          className={`inline-flex rounded-full px-3 py-1.5 text-xs font-medium transition cursor-pointer ${
                             lesson.published
                               ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
                               : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
