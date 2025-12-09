@@ -214,12 +214,12 @@ export function CourseModules({ courseId }: CourseModulesProps) {
     setFormData({ title: '', moduleOrder: '' });
   };
 
-  const handleDragStart = (id: number, e: React.DragEvent) => {
+  const handleDragStart = (id: string | number, e: React.DragEvent) => {
     e.dataTransfer.effectAllowed = 'move';
     setDraggedId(id);
   };
 
-  const handleDragOver = (id: number, e: React.DragEvent) => {
+  const handleDragOver = (id: string | number, e: React.DragEvent) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
     setDragOverId(id);
@@ -230,7 +230,7 @@ export function CourseModules({ courseId }: CourseModulesProps) {
     setDragOverId(null);
   };
 
-  const handleDrop = (targetId: number, e: React.DragEvent) => {
+  const handleDrop = async (targetId: string | number, e: React.DragEvent) => {
     e.preventDefault();
 
     if (draggedId === null || draggedId === targetId) {
@@ -255,6 +255,19 @@ export function CourseModules({ courseId }: CourseModulesProps) {
     setModules(modulesWithUpdatedOrder);
     setDraggedId(null);
     setDragOverId(null);
+
+    // Send reorder updates to API
+    try {
+      for (const module of modulesWithUpdatedOrder) {
+        await fetch(`/api/v1/course/module/update/${module.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ moduleOrder: module.moduleOrder }),
+        });
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to update module order');
+    }
   };
 
   const handleDragEnd = () => {
