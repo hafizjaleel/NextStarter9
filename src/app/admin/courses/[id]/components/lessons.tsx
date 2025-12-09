@@ -555,163 +555,162 @@ export function CourseLessons({ courseId }: CourseLessonsProps) {
         title={editingId !== null ? 'Edit Lesson' : 'Add New Lesson'}
       >
         <form onSubmit={handleAddLesson} className="space-y-4">
+          <div>
+            <label htmlFor="title" className="block text-sm font-medium text-slate-900 mb-1">
+              Lesson Title
+            </label>
+            <input
+              id="title"
+              name="title"
+              type="text"
+              value={formData.title}
+              onChange={handleInputChange}
+              placeholder="e.g., Introduction to React"
+              className="w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-500 transition focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="moduleId" className="block text-sm font-medium text-slate-900 mb-1">
+              Module
+            </label>
+            <select
+              id="moduleId"
+              name="moduleId"
+              value={formData.moduleId}
+              onChange={handleInputChange}
+              className="w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 transition focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
+              required
+            >
+              <option value="">Select a module</option>
+              {modules.map((module) => (
+                <option key={module.id} value={module.id}>
+                  {module.title}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label htmlFor="title" className="block text-sm font-medium text-slate-900 mb-1">
-                Lesson Title
+              <label htmlFor="lessonType" className="block text-sm font-medium text-slate-900 mb-1">
+                Lesson Type
+              </label>
+              <select
+                id="lessonType"
+                name="lessonType"
+                value={formData.lessonType}
+                onChange={handleInputChange}
+                className="w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 transition focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
+              >
+                <option value="video">Video</option>
+                <option value="pdf">PDF</option>
+                <option value="audio">Audio</option>
+                <option value="file">File</option>
+                <option value="text">Text</option>
+                <option value="quiz">Quiz</option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor="lessonOrder" className="block text-sm font-medium text-slate-900 mb-1">
+                Lesson Order
               </label>
               <input
-                id="title"
-                name="title"
-                type="text"
-                value={formData.title}
+                id="lessonOrder"
+                name="lessonOrder"
+                type="number"
+                min="1"
+                value={formData.lessonOrder}
                 onChange={handleInputChange}
-                placeholder="e.g., Introduction to React"
+                placeholder="e.g., 1"
                 className="w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-500 transition focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 required
               />
             </div>
+          </div>
 
+          {formData.lessonType === 'video' && (
             <div>
-              <label htmlFor="module" className="block text-sm font-medium text-slate-900 mb-1">
-                Module
+              <label htmlFor="muxUrl" className="block text-sm font-medium text-slate-900 mb-1">
+                Mux Video URL or Asset ID
               </label>
-              <select
-                id="module"
-                name="module"
-                value={formData.module}
+              <input
+                id="muxUrl"
+                name="muxUrl"
+                type="text"
+                value={formData.muxUrl}
                 onChange={handleInputChange}
-                className="w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 transition focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
+                placeholder="e.g., https://image.mux.com/... or asset ID"
+                className="w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-500 transition focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 required
-              >
-                {modules.map((module) => (
-                  <option key={module} value={module}>
-                    {module}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div>
-                <label htmlFor="type" className="block text-sm font-medium text-slate-900 mb-1">
-                  Type
-                </label>
-                <select
-                  id="type"
-                  name="type"
-                  value={formData.type}
-                  onChange={handleInputChange}
-                  className="w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 transition focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
-                >
-                  <option value="video">Video</option>
-                  <option value="pdf">PDF</option>
-                  <option value="downloadable">Downloadable Content</option>
-                  <option value="quiz">Quiz</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="duration" className="block text-sm font-medium text-slate-900 mb-1">
-                  Duration
-                </label>
-                <input
-                  id="duration"
-                  name="duration"
-                  type="text"
-                  value={formData.duration}
-                  onChange={handleInputChange}
-                  placeholder="e.g., 15m"
-                  className="w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-500 transition focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                  required
-                />
-              </div>
-            </div>
-
-            {formData.type === 'video' && (
-              <div>
-                <label htmlFor="muxVideo" className="block text-sm font-medium text-slate-900 mb-1">
-                  Mux Video URL or Asset ID
-                </label>
-                <input
-                  id="muxVideo"
-                  name="muxVideo"
-                  type="text"
-                  value={formData.muxVideo}
-                  onChange={handleInputChange}
-                  placeholder="e.g., https://image.mux.com/... or asset ID"
-                  className="w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-500 transition focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                  required
-                />
-              </div>
-            )}
-
-            {formData.type === 'pdf' && (
-              <div>
-                <label htmlFor="pdfFile" className="block text-sm font-medium text-slate-900 mb-1">
-                  PDF File Upload
-                </label>
-                <div className="relative">
-                  <input
-                    id="pdfFile"
-                    name="pdfFile"
-                    type="file"
-                    accept=".pdf"
-                    onChange={handleFileChange}
-                    className="block w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 transition focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer file:mr-4 file:bg-emerald-50 file:border-0 file:px-3 file:py-1.5 file:rounded-md file:text-sm file:font-medium file:text-emerald-700 hover:file:bg-emerald-100"
-                    required
-                  />
-                </div>
-                {formData.pdfFile && (
-                  <p className="mt-2 text-xs text-slate-600">Selected: {formData.pdfFile.name}</p>
-                )}
-              </div>
-            )}
-
-            {formData.type === 'downloadable' && (
-              <div>
-                <label htmlFor="downloadableFile" className="block text-sm font-medium text-slate-900 mb-1">
-                  Downloadable File Upload
-                </label>
-                <div className="relative">
-                  <input
-                    id="downloadableFile"
-                    name="downloadableFile"
-                    type="file"
-                    onChange={handleFileChange}
-                    className="block w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 transition focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer file:mr-4 file:bg-emerald-50 file:border-0 file:px-3 file:py-1.5 file:rounded-md file:text-sm file:font-medium file:text-emerald-700 hover:file:bg-emerald-100"
-                    required
-                  />
-                </div>
-                {formData.downloadableFile && (
-                  <p className="mt-2 text-xs text-slate-600">Selected: {formData.downloadableFile.name}</p>
-                )}
-              </div>
-            )}
-
-            {formData.type === 'quiz' && (
-              <QuizForm
-                quizData={formData.quizData}
-                onQuizDataChange={(quizData) =>
-                  setFormData((prev) => ({ ...prev, quizData }))
-                }
               />
-            )}
-
-            <div className="flex gap-3 pt-2">
-              <button
-                type="submit"
-                className="rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-emerald-700"
-              >
-                {editingId !== null ? 'Update Lesson' : 'Add Lesson'}
-              </button>
-              <button
-                type="button"
-                onClick={handleClosePanel}
-                className="rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50"
-              >
-                Cancel
-              </button>
             </div>
-          </form>
+          )}
+
+          {(formData.lessonType === 'pdf' || formData.lessonType === 'audio' || formData.lessonType === 'file') && (
+            <div>
+              <label htmlFor="file-upload" className="block text-sm font-medium text-slate-900 mb-1">
+                Upload {formData.lessonType === 'pdf' ? 'PDF' : formData.lessonType === 'audio' ? 'Audio' : 'File'}
+              </label>
+              <div className="relative">
+                <input
+                  id="file-upload"
+                  type="file"
+                  multiple
+                  onChange={handleFileUpload}
+                  disabled={uploading}
+                  className="block w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 transition focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer file:mr-4 file:bg-emerald-50 file:border-0 file:px-3 file:py-1.5 file:rounded-md file:text-sm file:font-medium file:text-emerald-700 hover:file:bg-emerald-100 disabled:opacity-50"
+                />
+              </div>
+              {uploading && <p className="mt-2 text-xs text-slate-600">Uploading files...</p>}
+              {formData.uploadedFiles.length > 0 && (
+                <div className="mt-3 space-y-2">
+                  <p className="text-xs font-medium text-slate-600">Uploaded files:</p>
+                  {formData.uploadedFiles.map((file) => (
+                    <div key={file.id} className="flex items-center justify-between rounded-lg bg-slate-50 p-2">
+                      <span className="text-xs text-slate-700">{file.name}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveUploadedFile(file.id)}
+                        className="text-xs font-medium text-red-600 hover:text-red-700"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {formData.lessonType === 'quiz' && (
+            <QuizForm
+              quizData={formData.quizData}
+              onQuizDataChange={(quizData) =>
+                setFormData((prev) => ({ ...prev, quizData }))
+              }
+            />
+          )}
+
+          <div className="flex gap-3 pt-2">
+            <button
+              type="submit"
+              disabled={uploading}
+              className="rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-emerald-700 disabled:opacity-50"
+            >
+              {editingId !== null ? 'Update Lesson' : 'Add Lesson'}
+            </button>
+            <button
+              type="button"
+              onClick={handleClosePanel}
+              disabled={uploading}
+              className="rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50 disabled:opacity-50"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
       </SidePanel>
 
       {selectedLessonIds.length > 0 && (
