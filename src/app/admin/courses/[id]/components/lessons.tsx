@@ -198,7 +198,14 @@ export function CourseLessons() {
   };
 
   const handleDeleteLesson = (id: number) => {
-    setLessons(lessons.filter((l) => l.id !== id));
+    setDeleteConfirm({ isOpen: true, id });
+  };
+
+  const handleConfirmDelete = () => {
+    if (deleteConfirm.id !== null) {
+      setLessons(lessons.filter((l) => l.id !== deleteConfirm.id));
+      setDeleteConfirm({ isOpen: false, id: null });
+    }
   };
 
   const handleToggleStatus = (id: number) => {
