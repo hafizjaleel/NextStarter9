@@ -4,9 +4,11 @@ interface FilterPanelProps {
   onCategoryChange?: (value: string) => void;
   onLevelChange?: (value: string) => void;
   onStatusChange?: (value: string) => void;
+  onIsFreeChange?: (value: string) => void;
   category?: string;
   level?: string;
   status?: string;
+  isFree?: string;
 }
 
 const categories = [
@@ -28,15 +30,24 @@ const statuses = [
   { value: '', label: 'All Status' },
   { value: 'published', label: 'Published' },
   { value: 'draft', label: 'Draft' },
+  { value: 'on_hold', label: 'On Hold' },
+];
+
+const priceTypes = [
+  { value: '', label: 'All Courses' },
+  { value: 'free', label: 'Free' },
+  { value: 'paid', label: 'Paid' },
 ];
 
 export function FilterPanel({
   onCategoryChange,
   onLevelChange,
   onStatusChange,
+  onIsFreeChange,
   category = '',
   level = '',
   status = '',
+  isFree = '',
 }: FilterPanelProps) {
   return (
     <div className="flex flex-wrap gap-4">
