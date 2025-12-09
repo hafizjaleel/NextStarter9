@@ -204,7 +204,10 @@ export function CourseModules() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600">
+                  <button
+                    onClick={() => handleEditModule(module.id)}
+                    className="rounded-lg p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
+                  >
                     <Edit2 className="h-4 w-4" strokeWidth={2} />
                   </button>
                   <button
